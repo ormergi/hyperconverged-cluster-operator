@@ -51,7 +51,7 @@ spec:
         - name: NETWORK_ADDONS_VERSION
           value: 0.38.0
         - name: SSP_VERSION
-          value: v1.0.35
+          value: v1.0.40
         - name: NMO_VERSION
           value: v0.6.0
         - name: HPPO_VERSION
@@ -215,49 +215,6 @@ spec:
         secret:
           optional: true
           secretName: kubevirt-operator-certs
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    name: kubevirt-ssp-operator
-  name: kubevirt-ssp-operator
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      name: kubevirt-ssp-operator
-  strategy: {}
-  template:
-    metadata:
-      labels:
-        name: kubevirt-ssp-operator
-    spec:
-      containers:
-      - env:
-        - name: POD_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.name
-        - name: IMAGE_REFERENCE
-          value: quay.io/fromani/kubevirt-ssp-operator-container:v1.0.35
-        - name: WATCH_NAMESPACE
-        - name: KVM_INFO_TAG
-        - name: VALIDATOR_TAG
-        - name: VIRT_LAUNCHER_TAG
-        - name: NODE_LABELLER_TAG
-        - name: CPU_PLUGIN_TAG
-        - name: IMAGE_NAME_PREFIX
-        - name: OPERATOR_NAME
-          value: kubevirt-ssp-operator
-        image: quay.io/fromani/kubevirt-ssp-operator-container:v1.0.35
-        imagePullPolicy: Always
-        name: kubevirt-ssp-operator
-        ports:
-        - containerPort: 60000
-          name: metrics
-        resources: {}
-      serviceAccountName: kubevirt-ssp-operator
 ---
 apiVersion: apps/v1
 kind: Deployment
